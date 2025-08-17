@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thông tin chuyến bay</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+    
+    body {
+        font-family: 'Be Vietnam Pro', sans-serif;
+        background-color: #f8fafc;
+        margin: 0;
+        padding: 0;
+        color: #334155;
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 700px;
+        background: #fff;
+        margin: 30px auto;
+        padding: 40px 50px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+    .logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .logo img {
+        max-height: 90px;
+    }
+    h2 {
+        color: #2563eb;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 24px;
+    }
+    .divider {
+        border-top: 1.5px solid #e2e8f0;
+        margin: 25px 0;
+    }
+    .customer-block {
+        margin-bottom: 25px;
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #2563eb;
+    }
+    .customer-block p {
+        margin: 8px 0;
+        font-size: 15px;
+        color: #475569;
+    }
+    .customer-block strong {
+        color: #1e293b;
+        font-weight: 500;
+        display: inline-block;
+        width: 120px;
+    }
+    .section-title {
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-top: 12px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    th {
+        background-color: #f1f5f9;
+        font-weight: 500;
+        color: #1e293b;
+        font-size: 14px;
+    }
+    th, td {
+        padding: 14px 16px;
+        text-align: left;
+        font-size: 14.5px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    tr:last-child td {
+        border-bottom: none;
+    }
+    .footer {
+        font-size: 13.5px;
+        color: #64748b;
+        text-align: center;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 20px;
+        margin-top: 30px;
+        line-height: 1.7;
+    }
+    .highlight {
+        color: #2563eb;
+        font-weight: 500;
+    }
+    .thank-you {
+        font-size: 15.5px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+        color: #475569;
+    }
+    a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Logo -->
+    <div class="logo" style="background-color: #ffffff;">
+        <img src="https://apii.hungthinhsecurity.com/storage/app/public/uploads/logo-vietnam-tickets.png" alt="Vietnam Tickets Logo">
+    </div>
+
+    <!-- Kính gửi & Cảm ơn -->
+    <div class="customer-block">
+       <p><strong>Kính gửi:</strong> {{ $booking->guest_name }}</p>
+       <p><strong>Số điện thoại:</strong> {{ $booking->guest_phone }}</p>
+       <p><strong>Email:</strong> {{ $booking->guest_email }}</p>
+       <p><strong>Địa chỉ:</strong> {{ $booking->guest_address }}</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="thank-you">
+        Cảm ơn Quý khách đã tin tưởng đặt vé máy bay tại 
+        <span class="highlight">Vietnam Tickets</span>. 
+        Dưới đây là thông tin chi tiết chuyến bay của Quý khách:
+    </p>
+
+<!-- Chuyến đi -->
+<div class="flight-info">
+    <div class="section-title">
+        ✈ Thông tin chuyến đi
+    </div>
+
+    @if(isset($booking->flights[0]))
+        @php
+            $routeGo = ($booking->flights[0]->start_point ?? '') . '-' . ($booking->flights[0]->end_point ?? '');
+        @endphp
+
+        <table>
+            <tr>
+                <th>Đi từ</th>
+                <td>{{ $booking->flights[0]->start_city ?? '' }} ({{ $booking->flights[0]->start_point ?? '' }})</td>
+            </tr>
+            <tr>
+                <th>Đến</th>
+                <td>{{ $booking->flights[0]->end_city ?? '' }} ({{ $booking->flights[0]->end_point ?? '' }})</td>
+            </tr>
+            <tr>
+                <th>Ngày giờ xuất phát</th>
+                <td>{{ optional($booking->flights[0]->start_date)->format('d/m/Y H:i') ?? '' }}</td>
+            </tr>
+            <tr>
+                <th>Hãng hàng không</th>
+                <td>{{ $booking->flights[0]->airline_name ?? '' }} ({{ $booking->flights[0]->flight_number ?? '' }})</td>
+            </tr>
+
+            {{-- Ghế --}}
+            <tr>
+                <th>Ghế ngồi</th>
+                <td>
+                    @forelse(($details->list_pre_seat ?? []) as $seat)
+                        @if(($seat['Route'] ?? '') === $routeGo)
+                            {{ $seat['Code'] ?? $seat['Name'] }} - {{ $seat['PassengerName'] }}
+                            ({{ number_format((float)($seat['Price'] ?? 0)) }} VND)<br>
+                        @endif
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+
+            {{-- Hành lý --}}
+            <tr>
+                <th>Hành lý</th>
+                <td>
+                    @forelse(($details->list_baggage ?? []) as $bag)
+                        @if(($bag['Route'] ?? '') === $routeGo)
+                            {{ $bag['Name'] }} - {{ $bag['PassengerName'] }}
+                            ({{ number_format((float)($bag['Price'] ?? 0)) }} VND)<br>
+                        @endif
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+
+            {{-- Dịch vụ --}}
+            <tr>
+                <th>Dịch vụ</th>
+                <td>
+                    @forelse(($details->list_service ?? []) as $sv)
+                        @if(($sv['Route'] ?? '') === $routeGo)
+                            {{ $sv['Name'] }} - {{ $sv['PassengerName'] }}
+                            ({{ number_format((float)($sv['Price'] ?? 0)) }} VND)<br>
+                        @endif
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+            {{-- Chi tiết vé --}}
+            <tr>
+                <th>Chi tiết vé</th>
+                <td>
+                    @php
+                        $fares = collect($details->list_fare ?? [])->where('Route', $routeGo);
+                    @endphp
+
+                    @forelse($fares as $fare)
+                        @foreach($fare['ListFarePax'] ?? [] as $pax)
+                            {{ $pax['PaxName'] ?? '' }}: 
+                            Vé gốc {{ number_format((float)str_replace(',', '', $pax['TICKET_FARE'] ?? 0)) }} VND, 
+                            Phí dịch vụ {{ number_format((float)str_replace(',', '', $pax['SERVICE_FEE'] ?? 0)) }} VND, 
+                            Tổng {{ number_format((float)str_replace(',', '', $pax['TotalFare'] ?? 0)) }} VND
+                            <br>
+                        @endforeach
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+
+        </table>
+    @else
+        <p><em>Chưa có thông tin chuyến đi</em></p>
+    @endif
+</div>
+
+
+<!-- Chuyến về -->
+<div class="flight-info" style="margin-top:30px;">
+    <div class="section-title">✈ Thông tin chuyến về</div>
+
+    @if(isset($booking->flights[1]))
+        @php
+            $routeReturn = ($booking->flights[1]->start_point ?? '') . '-' . ($booking->flights[1]->end_point ?? '');
+        @endphp
+
+        <table>
+            <tr>
+                <th>Đi từ</th>
+                <td>{{ $booking->flights[1]->start_city ?? '' }} ({{ $booking->flights[1]->start_point ?? '' }})</td>
+            </tr>
+            <tr>
+                <th>Đến</th>
+                <td>{{ $booking->flights[1]->end_city ?? '' }} ({{ $booking->flights[1]->end_point ?? '' }})</td>
+            </tr>
+            <tr>
+                <th>Ngày giờ xuất phát</th>
+                <td>{{ optional($booking->flights[1]->start_date)->format('d/m/Y H:i') ?? '' }}</td>
+            </tr>
+            <tr>
+                <th>Hãng hàng không</th>
+                <td>{{ $booking->flights[1]->airline_name ?? '' }} ({{ $booking->flights[1]->flight_number ?? '' }})</td>
+            </tr>
+
+            {{-- Ghế --}}
+            <tr>
+                <th>Ghế ngồi</th>
+                <td>
+                    @forelse(($details->list_pre_seat ?? []) as $seat)
+                        @if(($seat['Route'] ?? '') === $routeReturn)
+                            {{ $seat['Code'] ?? $seat['Name'] }} - {{ $seat['PassengerName'] }}
+                            ({{ number_format((float)($seat['Price'] ?? 0)) }} VND)<br>
+                        @endif
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+
+            {{-- Hành lý --}}
+            <tr>
+                <th>Hành lý</th>
+                <td>
+                    @forelse(($details->list_baggage ?? []) as $bag)
+                        @if(($bag['Route'] ?? '') === $routeReturn)
+                            {{ $bag['Name'] }} - {{ $bag['PassengerName'] }}
+                            ({{ number_format((float)($bag['Price'] ?? 0)) }} VND)<br>
+                        @endif
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+
+            {{-- Dịch vụ --}}
+            <tr>
+                <th>Dịch vụ</th>
+                <td>
+                    @forelse(($details->list_service ?? []) as $sv)
+                        @if(($sv['Route'] ?? '') === $routeReturn)
+                            {{ $sv['Name'] }} - {{ $sv['PassengerName'] }}
+                            ({{ number_format((float)($sv['Price'] ?? 0)) }} VND)<br>
+                        @endif
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+            {{-- Chi tiết vé (Chuyến về) --}}
+            <tr>
+                <th>Chi tiết vé (chuyến về)</th>
+                <td>
+                    @php
+                        $routeReturn = $booking->flights[1]->start_point . '-' . $booking->flights[1]->end_point;
+                        $faresReturn = collect($details->list_fare ?? [])->where('Route', $routeReturn);
+                    @endphp
+
+                    @forelse($faresReturn as $fare)
+                        @foreach($fare['ListFarePax'] ?? [] as $pax)
+                            {{ $pax['PaxName'] ?? '' }}: 
+                            Vé gốc {{ number_format((float)str_replace(',', '', $pax['TICKET_FARE'] ?? 0)) }} VND, 
+                            Phí dịch vụ {{ number_format((float)str_replace(',', '', $pax['SERVICE_FEE'] ?? 0)) }} VND, 
+                            Tổng {{ number_format((float)str_replace(',', '', $pax['TotalFare'] ?? 0)) }} VND
+                            <br>
+                        @endforeach
+                    @empty
+                        Không có
+                    @endforelse
+                </td>
+            </tr>
+
+        </table>
+    @else
+        <p><em>Chưa có thông tin chuyến về</em></p>
+    @endif
+</div>
+
+
+
+
+@if(!empty($details->list_baggage))
+<div class="flight-info" style="margin-top:30px;">
+    <div class="section-title">🛄 Hành lý ký gửi</div>
+    <table>
+        <tr>
+            <th>Chuyến</th>
+            <th>Tên dịch vụ</th>
+            <th>Hành khách</th>
+            <th>Giá</th>
+        </tr>
+        @foreach($details->list_baggage as $bag)
+        <tr>
+            <td>{{ $bag['Route'] ?? '' }}</td>
+            <td>{{ $bag['Name'] ?? '' }}</td>
+            <td>{{ $bag['PassengerName'] ?? '' }}</td>
+            <td>{{ number_format((float)($bag['Price'] ?? 0)) }} VND</td>
+        </tr>
+        @endforeach
+    </table>
+</div>
+@endif
+
+@if(!empty($details->list_service))
+<div class="flight-info" style="margin-top:30px;">
+    <div class="section-title">🛎 Dịch vụ mua thêm</div>
+    <table>
+        <tr>
+            <th>Chuyến</th>
+            <th>Tên dịch vụ</th>
+            <th>Hành khách</th>
+            <th>Giá</th>
+        </tr>
+        @foreach($details->list_service as $sv)
+        <tr>
+            <td>{{ $sv['Route'] ?? '' }}</td>
+            <td>{{ $sv['Name'] ?? '' }}</td>
+            <td>{{ $sv['PassengerName'] ?? '' }}</td>
+            <td>{{ number_format((float)($sv['Price'] ?? 0)) }} VND</td>
+        </tr>
+        @endforeach
+    </table>
+</div>
+@endif
+
+@if(!empty($details->list_pre_seat))
+<div class="flight-info" style="margin-top:30px;">
+    <div class="section-title">💺 Ghế ngồi đã chọn</div>
+    <table>
+        <tr>
+            <th>Chuyến</th>
+            <th>Mã ghế</th>
+            <th>Hành khách</th>
+            <th>Giá</th>
+        </tr>
+        @foreach($details->list_pre_seat as $seat)
+        <tr>
+            <td>{{ $seat['Route'] ?? '' }}</td>
+            <td>{{ $seat['Code'] ?? $seat['Name'] ?? '' }}</td>
+            <td>{{ $seat['PassengerName'] ?? '' }}</td>
+            <td>{{ number_format((float)($seat['Price'] ?? 0)) }} VND</td>
+        </tr>
+        @endforeach
+    </table>
+</div>
+@endif
+
+@if(!empty($details))
+<div class="flight-info" style="margin-top:30px;">
+    <div class="section-title">💳 Chi tiết phí</div>
+  @php
+    $baggage = (float)str_replace(',', '', ($details->baggage_price ?? 0));
+    $service = (float)str_replace(',', '', ($details->service_price ?? 0));
+    $seat    = (float)str_replace(',', '', ($details->seat_price ?? 0));
+    $total   = (float)str_replace(',', '', ($details->total_fare ?? 0));
+
+    $ticketFare = $total - ($baggage + $service + $seat);
+@endphp
+
+<table>
+    <tr>
+        <th>Hạng mục</th>
+        <th>Số tiền (VND)</th>
+    </tr>
+    <tr>
+        <td>Giá vé</td>
+        <td>{{ number_format($ticketFare) }}</td>
+    </tr>
+    <tr>
+        <td>Phí hành lý</td>
+        <td>{{ number_format($baggage) }}</td>
+    </tr>
+    <tr>
+        <td>Phí dịch vụ</td>
+        <td>{{ number_format($service) }}</td>
+    </tr>
+    <tr>
+        <td>Phí ghế ngồi</td>
+        <td>{{ number_format($seat) }}</td>
+    </tr>
+    <tr>
+        <th>Tổng cộng</th>
+        <th>{{ number_format($total) }}</th>
+    </tr>
+</table>
+
+</div>
+@endif
+
+    <!-- Footer -->
+    <div class="footer">
+        <p><strong>Vietnam Tickets</strong> - Đại lý vé máy bay nội địa & quốc tế uy tín</p>
+        <p>Trụ sở: 69 Võ Thị Sáu, P.6, Q.3, TP.HCM | Chi nhánh: 173 Nguyễn Thị Minh Khai, Q.1, TP.HCM</p>
+        <p>Điện thoại: 1900 3173 | (028) 3936 2020 | Email: vietnamtickets16@gmail.com</p>
+        <p>Website: <a href="https://vietnam-tickets.com">vietnam-tickets.com</a></p>
+    </div>
+</div>
+
+</body>
+</html>

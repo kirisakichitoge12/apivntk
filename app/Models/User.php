@@ -6,8 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject; // Thêm dòng này
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject // Thêm implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -20,7 +21,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
+        'email_verification_token',
     ];
 
     /**
@@ -44,5 +47,26 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // ===== THÊM 2 PHƯƠNG THỨC BẮT BUỘC CHO JWT =====
+    /**
+     * Get the JWT identifier (usually the user ID).
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey(); // Trả về ID của user (khóa chính)
+    }
+
+    /**
+     * Get custom claims for JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return []; // Có thể thêm thông tin tùy chỉnh vào token (ví dụ: role)
     }
 }

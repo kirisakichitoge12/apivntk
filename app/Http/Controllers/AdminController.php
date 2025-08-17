@@ -12,4 +12,8 @@ class AdminController extends Controller
         // truyền dữ liệu nếu cần
         return view('admin.dashboard');
     }
+    public function viewhoadon()
+    {
+        return view("emails.email-invoid");
+    }
 }

@@ -5,9 +5,27 @@
                 <span class="hide-menu">Home</span>
                 </li>
                 <li class="sidebar-item">
-                <a class="sidebar-link" href="./index.html" aria-expanded="false">
-                    <i class="ti ti-atom"></i>
-                    <span class="hide-menu">Dashboard</span>
+                <a class="sidebar-link" href="bookings" aria-expanded="false">
+                    <i class="ti ti-shopping-cart"></i>
+                    <span class="hide-menu">Quản lí đơn hàng</span>
+                </a>
+                </li>
+                 <li class="sidebar-item">
+                <a class="sidebar-link" href="chinh-sua-background" aria-expanded="false">
+                    <i class="ti ti-settings"></i>
+                    <span class="hide-menu">Quản lí background</span>
+                </a>
+                </li>
+                <li class="sidebar-item">
+                <a class="sidebar-link" href="banner-khuyen-mai" aria-expanded="false">
+                    <i class="ti ti-receipt-2"></i>
+                    <span class="hide-menu">Quản lí banner</span>
+                </a>
+                </li>
+                <li class="sidebar-item">
+                <a class="sidebar-link" href="#" aria-expanded="false">
+                    <i class="ti ti-users"></i>
+                    <span class="hide-menu">Quản lí user</span>
                 </a>
                 </li>
                 <!-- ---------------------------------- -->
@@ -20,7 +38,7 @@
                     <span class="d-flex">
                         <i class="ti ti-aperture"></i>
                     </span>
-                    <span class="hide-menu">Analytical</span>
+                    <span class="hide-menu">Khách hàng tìm năng</span>
                     </div>
                     
                 </a>
