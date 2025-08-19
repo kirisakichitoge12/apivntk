@@ -8,7 +8,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
     
     body {
-        font-family: 'Be Vietnam Pro', sans-serif;
+        font-family: 'Be Vietnam Pro', sans-serif !important;
         background-color: #f8fafc;
         margin: 0;
         padding: 0;
@@ -16,7 +16,7 @@
         line-height: 1.6;
     }
     .container {
-        max-width: 700px;
+     
         background: #fff;
         margin: 30px auto;
         padding: 40px 50px;

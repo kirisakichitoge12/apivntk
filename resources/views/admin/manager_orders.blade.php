@@ -50,113 +50,6 @@
                             </button>
                         </td>
                     </tr>
-
-                  {{-- Modal Chi tiết --}}
-                <div class="modal fade" id="bookingDetailModal{{ $booking->id }}" tabindex="-1" aria-labelledby="bookingDetailModalLabel{{ $booking->id }}" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Chi tiết đơn hàng #{{ $booking->id }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                {{-- 1. Thông tin khách hàng --}}
-                                <h6 class="fw-bold border-bottom pb-1">Thông tin khách hàng</h6>
-                                <p>Họ và tên: {{ $booking->guest_name }}</p>
-                                <p>CCCD/Hộ chiếu: {{ $booking->guest_identity ?? '—' }}</p>
-                                <p>Số điện thoại: {{ $booking->guest_phone }}</p>
-                                <p>Email: {{ $booking->guest_email }}</p>
-                                <p>Địa chỉ: {{ $booking->guest_address }}</p>
-
-                           @if($booking->airOptions->count())
-                            <h6 class="fw-bold border-bottom pb-1 mt-3">Chuyến bay</h6>
-                            <ul>
-                                @foreach($booking->airOptions as $i => $air)
-                                    @php
-                                        // Lấy ghế theo thứ tự chuyến bay
-                                        $seats = $booking->passengers
-                                            ->flatMap->preSeats
-                                            ->values(); // đảm bảo index chuẩn
-
-                                        // Lấy ghế tương ứng với chuyến bay hiện tại
-                                        $firstSeat = $seats->get($i);
-                                    @endphp
-
-                                    <li>
-                                        {{ $i === 0 ? 'Chuyến đi' : 'Chuyến về' }}:
-                                        {{ $firstSeat->start_point ?? '' }} → {{ $firstSeat->end_point ?? '' }}
-                                        (Hãng: {{ $firstSeat->airline ?? '—' }})
-
-                                        {{-- Danh sách ghế --}}
-                                        @if($firstSeat)
-                                            <ul>
-                                                <li>Ghế: {{ $firstSeat->name }} - {{ number_format($firstSeat->price, 0, ',', '.') }} {{ $firstSeat->currency }}</li>
-                                            </ul>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @endif
-
-
-                                {{-- 3. Dịch vụ --}}
-                                <h6 class="fw-bold border-bottom pb-1 mt-3">Dịch vụ kèm theo</h6>
-                                @foreach($booking->passengers as $passenger)
-                                    <p><strong>Hành khách:</strong> {{ $passenger->full_name }}</p>
-
-                                    {{-- Ghế ngồi --}}
-                                    @if($passenger->preSeats->count())
-                                        <p><u>Ghế ngồi:</u></p>
-                                        <ul>
-                                            @foreach($passenger->preSeats as $seat)
-                                                <li>{{ $seat->name }} - {{ number_format($seat->price, 0, ',', '.') }} {{ $seat->currency }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-
-                                    {{-- Hành lý --}}
-                                    @if($passenger->baggages->count())
-                                        <p><u>Hành lý:</u></p>
-                                        <ul>
-                                            @foreach($passenger->baggages as $bag)
-                                                <li>{{ $bag->name }} - {{ number_format($bag->price, 0, ',', '.') }} {{ $bag->currency }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-
-                                    {{-- Dịch vụ khác --}}
-                                    @if($passenger->services->count())
-                                        <p><u>Dịch vụ khác:</u></p>
-                                        <ul>
-                                            @foreach($passenger->services as $service)
-                                                <li>{{ $service->name }} - {{ number_format($service->price, 0, ',', '.') }} {{ $service->currency }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                @endforeach
-
-                                {{-- 4. Hóa đơn --}}
-                                @if($booking->invoice)
-                                    <h6 class="fw-bold border-bottom pb-1 mt-3">Hóa đơn</h6>
-                                    <p>Công ty: {{ $booking->invoice->company_name }}</p>
-                                    <p>MST: {{ $booking->invoice->company_tax_code }}</p>
-                                    <p>Địa chỉ: {{ $booking->invoice->company_address }}</p>
-                                @endif
-
-                                {{-- 5. Tổng tiền --}}
-                                <h6 class="fw-bold border-bottom pb-1 mt-3">Tổng tiền</h6>
-                                <p>Tổng tiền từng chặng: (nếu cần hiển thị chi tiết)</p>
-                                <p class="fw-bold">Tổng thanh toán: {{ number_format($booking->total_price, 0, ',', '.') }} {{ $booking->currency }}</p>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                     @endforeach
                 </tbody>
             </table>
@@ -168,6 +61,32 @@
         </div>
     </div>
 </div>
+
+{{-- Vòng lặp để render modal ra ngoài table --}}
+@foreach ($bookings as $booking)
+<div class="modal fade" id="bookingDetailModal{{ $booking->id }}" tabindex="-1" aria-labelledby="bookingDetailModalLabel{{ $booking->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết đơn hàng #{{ $booking->id }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                {{-- Include lại view email --}}
+                @include('emails.email-invoid-oders', [
+                    'booking' => $booking,
+                    'passengerCount' => $booking->passengers->count(),
+                    'services' => $booking->services ?? collect([]),
+                    'details' => $booking->detail ?? null,
+                ])
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
 <style>
     table.table td, table.table th {

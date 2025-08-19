@@ -6,6 +6,7 @@ use App\Interfaces\AuthInterface;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 
@@ -161,6 +162,7 @@ class AuthController extends Controller
                 return response()->json([
                     'success' => true,
                     'role' => 'admin',
+                    'demo' => 'admin nè',
                     'user' => $user,
                     'token' => $token,
                 ], 200);
@@ -168,19 +170,19 @@ class AuthController extends Controller
 
             // Nếu là user thì load bookings
             $bookings = Booking::with([
-                'airOptions',
-                'passengers.baggages',
-                'passengers.services',
-                'passengers.preSeats',
-                'invoice',
                 'flights',
-                'service_fees',
-                'services'
+                'detail',
             ])
             ->where('guest_email', $validated['email'])
             ->orderBy('created_at', 'desc')
             ->get();
 
+            Log::info('Đăng nhập thành công', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'bookings_count' => $bookings->count(),
+                'bookings' => $bookings->toArray(), // Ghi toàn bộ dữ liệu bookings
+            ]);
             return response()->json([
                 'success' => true,
                 'role' => 'user',
