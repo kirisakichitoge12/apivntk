@@ -15630,7 +15630,7 @@ textarea.form-control-lg {
   }
 }
 .left-sidebar {
-  width: 270px;
+  width: 350px;
   border-right: 1px solid var(--bs-border-color);
   flex-shrink: 0;
   background: var(--bs-body-bg);

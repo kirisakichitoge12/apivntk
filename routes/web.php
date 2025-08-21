@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BookingController;
@@ -14,14 +15,7 @@ use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
- Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
- 
- 
- Route::get('/demohoadon', [AdminController::class, 'viewhoadon']);
 
  Route::get('/chinh-sua-background', [PromotionBannerController::class, 'index']);
  Route::delete('/promotion-banners/{id}', [PromotionBannerController::class, 'destroy']);
@@ -33,7 +27,23 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/verify-email', [AuthController::class, 'verifyEmail']);
-//banner home
+
+
+
+
+
+
+Route::get('/admin', [AdminController::class, 'LoginAdmin']);
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::post('/admin/create', [AdminAuthController::class, 'createAdmin']);
+Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
+
+Route::middleware(['adminlogin'])->group(function () {
+ Route::get('admin/bookings', [BookingController::class, 'index']);
+ 
+ Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+ 
+ //banner home
 Route::get('/banners-home', [HomeImageController::class, 'index'])->name('banners.index');
 Route::post('/banners-home', [HomeImageController::class, 'store'])->name('banners.store');
 Route::delete('/banners-home/{id}', [HomeImageController::class, 'destroy'])->name('banners.destroy');
@@ -95,6 +105,16 @@ Route::post('background-trang-khuyen-mai', [KhuyenmaiImageController::class, 'ba
 Route::delete('background-trang-khuyen-mai/{id}', [KhuyenmaiImageController::class, 'backgroundDestroy'])->name('khuyenmai.background.destroy');
 
 
+
+//user 
+Route::get('/admin/users', [AdminController::class, 'listUsers'])->name('admin.users');
+//admin
+Route::get('/admin/admin', [AdminController::class, 'listAdmins']);
+Route::get('/admin/lich-su-thao-tac', [AdminController::class, 'listHistories']);
+
+
+
+});
  
 Route::middleware(['jwt.auth', 'admin'])->group(function () {
    

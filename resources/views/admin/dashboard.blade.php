@@ -3,113 +3,221 @@
 @section('title', 'Bảng điều khiển')
 
 @section('content')
-   <!--  Row 1 -->
-          <div class="row">
-            <div class="col-lg-8">
-              <div class="card w-100">
-                <div class="card-body">
-                  <div class="d-md-flex align-items-center">
-                    <div>
-                      <h4 class="card-title">Sales Overview</h4>
-                      <p class="card-subtitle">
-                        Ample admin Vs Pixel admin
-                      </p>
-                    </div>
-                    <div class="ms-auto">
-                      <ul class="list-unstyled mb-0">
-                        <li class="list-inline-item text-primary">
-                          <span class="round-8 text-bg-primary rounded-circle me-1 d-inline-block"></span>
-                          Ample
-                        </li>
-                        <li class="list-inline-item text-info">
-                          <span class="round-8 text-bg-info rounded-circle me-1 d-inline-block"></span>
-                          Pixel Admin
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div id="sales-overview" class="mt-4 mx-n6"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="card overflow-hidden">
-                <div class="card-body pb-0">
-                  <div class="d-flex align-items-start">
-                    <div>
-                      <h4 class="card-title">Weekly Stats</h4>
-                      <p class="card-subtitle">Average sales</p>
-                    </div>
-                    <div class="ms-auto">
-                      <div class="dropdown">
-                        <a href="javascript:void(0)" class="text-muted" id="year1-dropdown" data-bs-toggle="dropdown"
-                          aria-expanded="false">
-                          <i class="ti ti-dots fs-7"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="year1-dropdown">
-                          <li>
-                            <a class="dropdown-item" href="javascript:void(0)">Action</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="javascript:void(0)">Another action</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mt-4 pb-3 d-flex align-items-center">
-                    <span class="btn btn-primary rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-shopping-cart fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Top Sales</h5>
-                      <span class="text-muted fs-3">Johnathan Doe</span>
-                    </div>
-                    <div class="ms-auto">
-                      <span class="badge bg-secondary-subtle text-muted">+68%</span>
-                    </div>
-                  </div>
-                  <div class="py-3 d-flex align-items-center">
-                    <span class="btn btn-warning rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-star fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Best Seller</h5>
-                      <span class="text-muted fs-3">MaterialPro Admin</span>
-                    </div>
-                    <div class="ms-auto">
-                      <span class="badge bg-secondary-subtle text-muted">+68%</span>
-                    </div>
-                  </div>
-                  <div class="py-3 d-flex align-items-center">
-                    <span class="btn btn-success rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-message-dots fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Most Commented</h5>
-                      <span class="text-muted fs-3">Ample Admin</span>
-                    </div>
-                    <div class="ms-auto">
-                      <span class="badge bg-secondary-subtle text-muted">+68%</span>
-                    </div>
-                  </div>
-                  <div class="pt-3 mb-7 d-flex align-items-center">
-                    <span class="btn btn-secondary rounded-circle round-48 hstack justify-content-center">
-                      <i class="ti ti-diamond fs-6"></i>
-                    </span>
-                    <div class="ms-3">
-                      <h5 class="mb-0 fw-bolder fs-4">Top Budgets</h5>
-                      <span class="text-muted fs-3">Sunil Joshi</span>
-                    </div>
-                    <div class="ms-auto">
-                      <span class="badge bg-secondary-subtle text-muted">+15%</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <div class="dashboard-header" data-aos="fade-down">
+        <h1 class="dashboard-title"><i class="ti ti-dashboard"></i> Bảng điều khiển</h1>
+        <div class="user-info">
+            <i class="ti ti-user"></i>
+            <span>Xin chào, Quản trị viên</span>
+            <div class="pulse"></div>
+        </div>
+    </div>
+
+  <div class="stats-grid">
+    <div class="stat-card primary" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-icon">
+            <i class="ti ti-shopping-cart"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">{{ number_format($totalBookings) }}</div>
+            <div class="stat-label">Tổng đơn hàng</div>
+            <div class="stat-change positive">
+                <i class="ti ti-trending-up"></i> +{{ $bookingGrowth ?? 0 }}% so với tháng trước
             </div>
         </div>
+    </div>
+    
+    <div class="stat-card success" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-icon">
+            <i class="ti ti-users"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">{{ number_format($totalUsers) }}</div>
+            <div class="stat-label">Số lượng người dùng</div>
+            <div class="stat-change positive">
+                <i class="ti ti-trending-up"></i> +{{ $userGrowth ?? 0 }}% so với tháng trước
+            </div>
+        </div>
+    </div>
+    
+    <div class="stat-card warning" data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-icon">
+            <i class="ti ti-currency-dollar"></i>
+        </div>
+        <div class="stat-info">
+       <div class="stat-value">{{ $totalRevenue}} VND</div>
+            <div class="stat-label">Tổng doanh thu</div>
+            <div class="stat-change positive">
+                <i class="ti ti-trending-up"></i> +12.5% so với tháng trước
+            </div>
+        </div>
+    </div>
+    
+    <div class="stat-card secondary" data-aos="fade-up" data-aos-delay="400">
+        <div class="stat-icon">
+            <i class="ti ti-history"></i>
+        </div>
+        <div class="stat-info">
+            <div class="stat-value">{{ number_format($recentHistories) }}</div>
+            <div class="stat-label">Thao tác gần đây</div>
+            <div class="stat-change negative">
+                <i class="ti ti-trending-down"></i> -{{ $historyGrowth ?? 0 }}% so với tháng trước
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="chart-grid">
+        <div class="card" data-aos="fade-right" data-aos-delay="500">
+            <h3 class="card-title"><i class="ti ti-chart-line"></i> Thống kê doanh thu</h3>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+        
+       <div class="card" data-aos="fade-left" data-aos-delay="500">
+    <h3 class="card-title"><i class="ti ti-activity"></i> Hoạt động gần đây</h3>
+    <ul class="recent-activities">
+        @foreach($latestActivities as $activity)
+            <li class="activity-item activity-primary">
+                <div class="activity-icon">
+                    <i class="ti ti-history"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">{{ $activity->action }} - {{ $activity->table_name }}</div>
+                    <div class="activity-time">{{ \Carbon\Carbon::parse($activity->acted_at)->diffForHumans() }}</div>
+                </div>
+            </li>
+        @endforeach
+    </ul>
+</div>
+
+    </div>
+<div class="card" data-aos="fade-up" data-aos-delay="600">
+    <h3 class="card-title"><i class="ti ti-report-analytics"></i> Doanh thu theo tháng</h3>
+    <table class="revenue-table">
+        <thead>
+            <tr>
+                <th>Tháng</th>
+                <th>Doanh thu</th>
+                <th>Tăng trưởng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($monthlyRevenue as $item)
+                <tr>
+                    <td>Tháng {{ $item->month }}/{{ $item->year }}</td>
+                    <td><strong>{{ number_format($item->total, 0, ',', '.') }} ₫</strong></td>
+                    <td>
+                        @if($item->growth > 0)
+                            <span class="badge badge-success">+{{ $item->growth }}%</span>
+                        @elseif($item->growth < 0)
+                            <span class="badge badge-danger">{{ $item->growth }}%</span>
+                        @else
+                            <span class="badge badge-secondary">0%</span>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // ===== DỮ LIỆU TỪ LARAVEL =====
+        const labels = @json($labels);
+        const data = @json($data);
+
+        // ===== VẼ BIỂU ĐỒ =====
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu (VND)',
+                    data: data,
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderColor: '#3b82f6',
+                    borderWidth: 3,
+                    tension: 0.3,
+                    pointBackgroundColor: '#3b82f6',
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return `Doanh thu: ${context.raw.toLocaleString()} VND`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { drawBorder: false },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString() + ' ₫';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // ===== HIỆU ỨNG SỐ ĐẾM =====
+        const statValues = document.querySelectorAll('.stat-value');
+        const options = { threshold: 0.5 };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const finalValue = parseInt(el.textContent.replace(/\D/g, '')) || 0;
+                    const duration = 2000;
+                    const step = finalValue / (duration / 16);
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += step;
+                        if (current >= finalValue) {
+                            clearInterval(timer);
+                            el.textContent = finalValue.toLocaleString();
+                        } else {
+                            el.textContent = Math.floor(current).toLocaleString();
+                        }
+                    }, 16);
+
+                    observer.unobserve(el);
+                }
+            });
+        }, options);
+
+        statValues.forEach(value => observer.observe(value));
+    });
+</script>
+
 @endsection
