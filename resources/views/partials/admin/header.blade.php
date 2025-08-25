@@ -1,3 +1,4 @@
+
 <div class="sidebar-container">
   <nav class="sidebar-nav scroll-sidebar" data-simplebar>
     <ul id="sidebarnav">
@@ -25,6 +26,7 @@
         <ul class="submenu">
           <li><a href="/banners-home"><i class="ti ti-photo"></i> Quản lí Banner</a></li>
           <li><a href="/background-home"><i class="ti ti-color-swatch"></i> Quản lí Background</a></li>
+           <li><a href="/home-content"><i class="ti ti-color-swatch"></i> Quản lí Content</a></li>
         </ul>
       </li>
 
@@ -37,7 +39,7 @@
         </a>
         <ul class="submenu">
           <li><a href="/banners-trang-ve-may-bay-noi-dia"><i class="ti ti-list"></i> Danh sách banner</a></li>
-          <li><a href="/background-trang-ve-may-bay-noi-dia"><i class="ti ti-plus"></i> Thêm banner</a></li>
+          <li><a href="/background-trang-ve-may-bay-noi-dia"><i class="ti ti-plus"></i> Thêm background</a></li>
         </ul>
       </li>
 
@@ -50,7 +52,7 @@
         </a>
         <ul class="submenu">
           <li><a href="/banners-trang-ve-may-bay-quoc-te"><i class="ti ti-list"></i> Danh sách banner</a></li>
-          <li><a href="/background-trang-ve-may-bay-quoc-te"><i class="ti ti-plus"></i> Thêm banner</a></li>
+          <li><a href="/background-trang-ve-may-bay-quoc-te"><i class="ti ti-plus"></i> Thêm background</a></li>
         </ul>
       </li>
 
@@ -63,7 +65,7 @@
         </a>
         <ul class="submenu">
           <li><a href="/banners-trang-khuyen-mai"><i class="ti ti-list"></i> Danh sách banner</a></li>
-          <li><a href="/background-trang-khuyen-mai"><i class="ti ti-plus"></i> Thêm khuyến mãi</a></li>
+          <li><a href="/background-trang-khuyen-mai"><i class="ti ti-plus"></i> Thêm background khuyến mãi</a></li>
         </ul>
       </li>
 
@@ -76,7 +78,7 @@
         </a>
         <ul class="submenu">
           <li><a href="/banners-trang-tin-tuc"><i class="ti ti-list"></i> Danh sách tin tức</a></li>
-          <li><a href="/background-trang-tin-tuc"><i class="ti ti-plus"></i> Thêm tin tức</a></li>
+          <li><a href="/background-trang-tin-tuc"><i class="ti ti-plus"></i> Thêm background tin tức</a></li>
         </ul>
       </li>
 

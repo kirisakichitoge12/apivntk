@@ -37,7 +37,8 @@ class AuthController extends Controller
 
         $user->update(['email_verified_at' => now(), 'email_verification_token' => null]);
 
-        return redirect('http://localhost:5173/dang-nhap');
+        return redirect('
+        /dang-nhap');
     }
 
     // public function login(Request $request)

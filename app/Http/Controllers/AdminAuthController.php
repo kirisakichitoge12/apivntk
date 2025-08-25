@@ -25,7 +25,7 @@ class AdminAuthController extends Controller
                 'admin_customs',
                 'Admin '.$admin->name.' (ID='.$admin->id.') đã đăng nhập'
             );
-            return redirect('/admin/bookings');
+            return redirect('/');
         }
 
         return back()->with('error', 'Sai email hoặc mật khẩu');

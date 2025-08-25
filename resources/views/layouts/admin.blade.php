@@ -575,6 +575,55 @@ body {
                 gap: 15px;
             }
         }
+        /* Sidebar width */
+.sidebar-container {
+  width: 260px !important;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  font-size: 13px; /* chữ nhỏ gọn hơn */
+}
+
+/* Link trong sidebar */
+.sidebar-container .sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  color: #333;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar-container .sidebar-link:hover {
+  background: #f1f1f1;
+  color: #0d6efd;
+}
+
+/* Submenu */
+.sidebar-container .submenu {
+  list-style: none;
+  padding-left: 20px;
+  font-size: 12.5px; /* chữ submenu nhỏ hơn 1 chút */
+}
+
+.submenu li a {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  color: #555;
+}
+
+.submenu li a:hover {
+  color: #0d6efd;
+}
+
+        
 </style>
 </head>
 
@@ -584,7 +633,7 @@ body {
     data-sidebar-position="fixed" data-header-position="fixed">
 
     <!-- Sidebar Start -->
-        <aside class="left-sidebar">
+        <aside class="left-siderwe" style="background-color:none !important">
         <!-- Sidebar scroll-->
         <div>
             <div class="brand-logo d-flex align-items-center justify-content-between">
@@ -607,11 +656,12 @@ body {
       <!--  Header Start -->
       
       <!--  Header End -->
-      <div class="body-wrapper-inner">
-        <div class="container-fluid" style="padding-top:50px;">
-        @yield('content') 
-      </div>
-      </div>
+     <div class="body-wrapper-inner">
+  <div class="container" style="padding-top:50px; min-width:920px; margin:0 auto;">
+    @yield('content') 
+  </div>
+</div>
+
     
   </div>
    <script>

@@ -149,10 +149,52 @@
         Dưới đây là thông tin chi tiết chuyến bay của Quý khách:
     </p>
 
-<!-- Chuyến đi -->
+
+
+
+
+
+    @if(!empty($booking->flights) && count($booking->flights) > 2)
+
+    {{-- ✅ Trường hợp nhiều hơn 2 chặng: dùng foreach --}}
+    @foreach($booking->flights as $index => $flight)
+        @php
+            $route = ($flight->start_point ?? '') . '-' . ($flight->end_point ?? '');
+        @endphp
+
+        <div class="flight-info" style="margin-top:30px;">
+            <div class="section-title">
+                ✈️ Chặng {{ $index + 1 }}: {{ $flight->start_city ?? '' }} → {{ $flight->end_city ?? '' }}
+            </div>
+
+            <table>
+                <tr>
+                    <th>Đi từ</th>
+                    <td>{{ $flight->start_city ?? '' }} ({{ $flight->start_point ?? '' }})</td>
+                </tr>
+                <tr>
+                    <th>Đến</th>
+                    <td>{{ $flight->end_city ?? '' }} ({{ $flight->end_point ?? '' }})</td>
+                </tr>
+                <tr>
+                    <th>Ngày giờ xuất phát</th>
+                    <td>{{ optional($flight->start_date)->format('d/m/Y H:i') ?? '' }}</td>
+                </tr>
+                <tr>
+                    <th>Hãng hàng không</th>
+                    <td>{{ $flight->airline_name ?? '' }} ({{ $flight->flight_number ?? '' }})</td>
+                </tr>
+                {{-- Ghế / Hành lý / Dịch vụ / Vé: giữ nguyên code bạn đã viết --}}
+            </table>
+        </div>
+    @endforeach
+
+@elseif(!empty($booking->flights))
+
+       <!-- Chuyến đi -->
 <div class="flight-info">
     <div class="section-title">
-        ✈ Thông tin chuyến đi
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plane-icon lucide-plane"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg> Thông tin chuyến đi
     </div>
 
     @if(isset($booking->flights[0]))
@@ -251,7 +293,7 @@
 
 <!-- Chuyến về -->
 <div class="flight-info" style="margin-top:30px;">
-    <div class="section-title">✈ Thông tin chuyến về</div>
+    <div class="section-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plane-icon lucide-plane"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg> Thông tin chuyến về</div>
 
     @if(isset($booking->flights[1]))
         @php
@@ -348,11 +390,18 @@
 </div>
 
 
+@else
+    <p><em>Chưa có thông tin chuyến bay</em></p>
+@endif
+
+
+ 
+
 
 
 @if(!empty($details->list_baggage))
 <div class="flight-info" style="margin-top:30px;">
-    <div class="section-title">🛄 Hành lý ký gửi</div>
+    <div class="section-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-luggage-icon lucide-luggage"><path d="M6 20a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2"/><path d="M8 18V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v14"/><path d="M10 20h4"/><circle cx="16" cy="20" r="2"/><circle cx="8" cy="20" r="2"/></svg> Hành lý ký gửi</div>
     <table>
         <tr>
             <th>Chuyến</th>
@@ -374,7 +423,7 @@
 
 @if(!empty($details->list_service))
 <div class="flight-info" style="margin-top:30px;">
-    <div class="section-title">🛎 Dịch vụ mua thêm</div>
+    <div class="section-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-check-icon lucide-clipboard-check"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg> Dịch vụ mua thêm</div>
     <table>
         <tr>
             <th>Chuyến</th>
@@ -396,7 +445,7 @@
 
 @if(!empty($details->list_pre_seat))
 <div class="flight-info" style="margin-top:30px;">
-    <div class="section-title">💺 Ghế ngồi đã chọn</div>
+    <div class="section-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy-check-icon lucide-copy-check"><path d="m12 15 2 2 4-4"/><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Ghế ngồi đã chọn</div>
     <table>
         <tr>
             <th>Chuyến</th>
@@ -418,7 +467,7 @@
 
 @if(!empty($details))
 <div class="flight-info" style="margin-top:30px;">
-    <div class="section-title">💳 Chi tiết phí</div>
+    <div class="section-title"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ticket-check-icon lucide-ticket-check"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="m9 12 2 2 4-4"/></svg> Chi tiết phí</div>
   @php
     $baggage = (float)str_replace(',', '', ($details->baggage_price ?? 0));
     $service = (float)str_replace(',', '', ($details->service_price ?? 0));

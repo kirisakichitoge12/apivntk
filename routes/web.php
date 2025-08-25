@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PromotionBannerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeContentController;
 use App\Http\Controllers\HomeImageController;
 use App\Http\Controllers\KhuyenmaiImageController;
 use App\Http\Controllers\TintucImageController;
@@ -53,7 +54,8 @@ Route::get('/background-home', [HomeImageController::class, 'backgroundIndex'])-
 Route::post('/background-home', [HomeImageController::class, 'backgroundStore'])->name('background.store');
 Route::delete('/background-home/{id}', [HomeImageController::class, 'backgroundDestroy'])->name('background.destroy');
 
-
+Route::get('/home-content', [HomeContentController::class, 'index'])->name('home_content.index');
+Route::post('/home-content/save', [HomeContentController::class, 'save'])->name('home_content.save');
 //vé máy bay nội địa
 
 // Banners

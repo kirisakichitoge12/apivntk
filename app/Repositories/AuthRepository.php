@@ -104,7 +104,7 @@ class AuthRepository implements AuthInterface
 
     public function sendPasswordResetEmail(string $email, string $token): void
     {
-        $resetUrl = url('http://localhost:5173/authentication/reset-password-form?token=' . $token . '&email=' . $email);
+        $resetUrl = url('https://nhahang.hungthinhsecurity.com/authentication/reset-password-form?token=' . $token . '&email=' . $email);
 
         Mail::send('emails.reset-password', ['url' => $resetUrl], function ($message) use ($email) {
             $message->to($email)->subject('Yêu cầu đặt lại mật khẩu');
