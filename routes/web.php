@@ -1,17 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\DealController;
+use App\Http\Controllers\Admin\FlightController;
+use App\Http\Controllers\Admin\InternationalDealController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\BannerController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PromotionBannerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FaqCategoryController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeContentController;
 use App\Http\Controllers\HomeImageController;
 use App\Http\Controllers\KhuyenmaiImageController;
 use App\Http\Controllers\TintucImageController;
 use App\Http\Controllers\VemaybaynoidiaImageController;
 use App\Http\Controllers\VemaybayquocteImageController;
+use App\Http\Controllers\VenoidiaController;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -115,6 +121,14 @@ Route::get('/admin/admin', [AdminController::class, 'listAdmins']);
 Route::get('/admin/lich-su-thao-tac', [AdminController::class, 'listHistories']);
 
 
+//quản lí các tuyến bay
+Route::resource('admin/flights', FlightController::class); 
+Route::resource('admin/deals', DealController::class); // domestic ticket management 
+Route::resource('venoidia', VenoidiaController::class);  // content /01/edit is managements domestic 
+Route::resource('admin/international-deals',InternationalDealController::class); //international ticket management
+
+Route::resource('faq-categories', FaqCategoryController::class);
+Route::resource('faqs', FaqController::class);
 
 });
  

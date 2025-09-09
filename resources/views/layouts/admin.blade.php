@@ -623,7 +623,9 @@ body {
   color: #0d6efd;
 }
 
-        
+.cke_notification.cke_notification_warning {
+display: none !important;
+} 
 </style>
 </head>
 
@@ -636,14 +638,7 @@ body {
         <aside class="left-siderwe" style="background-color:none !important">
         <!-- Sidebar scroll-->
         <div>
-            <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="./index.html" class="text-nowrap logo-img">
-                <img src="assets/images/logos/logo.svg" alt="" />
-            </a>
-            <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
-                <i class="ti ti-x fs-6"></i>
-            </div>
-            </div>
+            
             <!-- Sidebar navigation-->
            @include('partials.admin.header')
             <!-- End Sidebar navigation -->
@@ -657,7 +652,7 @@ body {
       
       <!--  Header End -->
      <div class="body-wrapper-inner">
-  <div class="container" style="padding-top:50px; min-width:920px; margin:0 auto;">
+  <div class="container" style="min-width:920px; margin:0 auto;">
     @yield('content') 
   </div>
 </div>
@@ -699,6 +694,7 @@ body {
             });
         });
     </script>
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
   <script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/assets/js/sidebarmenu.js"></script>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\ContentManagementController;
 use App\Http\Controllers\Api\PromotionBannerController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FlightProxyController;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 Route::post('/bookings', [BookingController::class, 'store']);
@@ -26,6 +27,8 @@ Route::post('/promotion-banners', [PromotionBannerController::class, 'store']);
 
 
 //authentication 
+
+Route::get('/proxy/search', [FlightProxyController::class, 'search']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/verify-email', [AuthController::class, 'verifyEmail']);
