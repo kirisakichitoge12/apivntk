@@ -40,6 +40,8 @@
         <ul class="submenu">
           <li><a href="/banners-trang-ve-may-bay-noi-dia"><i class="ti ti-list"></i> Danh sách banner</a></li>
           <li><a href="/background-trang-ve-may-bay-noi-dia"><i class="ti ti-plus"></i> Thêm background</a></li>
+          <li><a href="/admin/flights"><i class="ti ti-list"></i>Quản lí vé giá tốt</a></li>
+          <li><a href="/admin/deals"><i class="ti ti-plus"></i>Quản lí vé khứ hồi/một chiều</a></li>
         </ul>
       </li>
 
@@ -53,6 +55,8 @@
         <ul class="submenu">
           <li><a href="/banners-trang-ve-may-bay-quoc-te"><i class="ti ti-list"></i> Danh sách banner</a></li>
           <li><a href="/background-trang-ve-may-bay-quoc-te"><i class="ti ti-plus"></i> Thêm background</a></li>
+          <li><a href="/international-flights"><i class="ti ti-list"></i>Quản lí vé nội địa giá tốt</a></li>
+          <li><a href="admin/international-deals"><i class="ti ti-plus"></i>Quản lí vé khứ hồi/một chiều</a></li>
         </ul>
       </li>
 

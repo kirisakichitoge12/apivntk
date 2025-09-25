@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\BannerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookingController;
@@ -39,3 +40,6 @@ Route::get('/khuyenmai', [ContentManagementController::class, 'ApiKhuyenmaiManag
 Route::get('/tintuc', [ContentManagementController::class, 'ApiTintucManagement']);
 Route::get('/vemaybaynoidia', [ContentManagementController::class, 'ApiVemaybaynoidiaManagement']);
 Route::get('/vemaybayquocte', [ContentManagementController::class, 'ApiVemaybayquocteManagement']);
+Route::get('/noi-dia', [AdminController::class, 'getNoiDiaData']);
+Route::get('/quoc-te', [AdminController::class, 'getQuocTeData']);
+Route::post('/consults', [BookingController::class, 'Formcontact']);

@@ -52,7 +52,7 @@
         </div>
     </div>
     
-    <div class="stat-card secondary" data-aos="fade-up" data-aos-delay="400">
+    <!-- <div class="stat-card secondary" data-aos="fade-up" data-aos-delay="400">
         <div class="stat-icon">
             <i class="ti ti-history"></i>
         </div>
@@ -63,7 +63,7 @@
                 <i class="ti ti-trending-down"></i> -{{ $historyGrowth ?? 0 }}% so với tháng trước
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
 

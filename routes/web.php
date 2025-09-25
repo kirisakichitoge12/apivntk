@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\DealController;
 use App\Http\Controllers\Admin\FlightController;
+use App\Http\Controllers\Admin\FlightNoidiaController;
 use App\Http\Controllers\Admin\InternationalDealController;
+use App\Http\Controllers\Admin\InternationalFlightController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Api\BannerController;
@@ -123,12 +125,19 @@ Route::get('/admin/lich-su-thao-tac', [AdminController::class, 'listHistories'])
 
 //quản lí các tuyến bay
 Route::resource('admin/flights', FlightController::class); 
+Route::resource('admin/international-deals',InternationalDealController::class); //international ticket management
+Route::resource('international-flights', InternationalFlightController::class);
+
 Route::resource('admin/deals', DealController::class); // domestic ticket management 
 Route::resource('venoidia', VenoidiaController::class);  // content /01/edit is managements domestic 
-Route::resource('admin/international-deals',InternationalDealController::class); //international ticket management
 
 Route::resource('faq-categories', FaqCategoryController::class);
 Route::resource('faqs', FaqController::class);
+
+
+//vé nội địa 
+Route::resource('flights-noi-dia', FlightNoidiaController::class);
+Route::get('admin/khach-hang', [AdminController::class, 'getContact'])->name('admin.consults.index');
 
 });
  

@@ -48,7 +48,7 @@ class DealController extends Controller
     public function edit($id)
     {
         $deal = Deal::findOrFail($id);
-        return view('admin.international_deals.edit', compact('deal'));
+        return view('admin.deals.edit', compact('deal'));
     }
 
     public function update(Request $request, $id)

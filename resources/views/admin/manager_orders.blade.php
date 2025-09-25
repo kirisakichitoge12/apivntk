@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container mt-5">
+
     <h3 class="mb-4">Quản lý đơn hàng vé máy bay</h3>
 
     <div class="card">
@@ -60,7 +60,6 @@
             </div>
         </div>
     </div>
-</div>
 
 {{-- Vòng lặp để render modal ra ngoài table --}}
 @foreach ($bookings as $booking)

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\BookingInvoiceMail;
 use App\Models\Banner;
 use App\Models\Booking;
+use App\Models\Consult;
 use Illuminate\Container\Attributes\Storage;
 use Illuminate\Http\Request;
 use Carbon\Carbon; 
@@ -285,6 +286,27 @@ class BookingController extends Controller
         return view('admin.show', compact('booking'));
     }
 
+    public function Formcontact(Request $request)
+    {
+        try {
+            $consult = Consult::create([
+                'name'    => $request->input('name'),
+                'phone'   => $request->input('phone'),
+                'message' => $request->input('message'),
+            ]);
 
+            return response()->json([
+                'success' => true,
+                'data'    => $consult,
+                'message' => 'Gửi yêu cầu tư vấn thành công!'
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error'   => $e->getMessage(),
+            ], 500);
+        }
+    }
 
 }

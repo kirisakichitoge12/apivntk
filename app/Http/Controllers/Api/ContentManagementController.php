@@ -28,7 +28,7 @@ class ContentManagementController extends Controller
     //
    public function ApiHomeManagement()
     {
-        $backgrounds = BackgroundHome::orderBy('id', 'desc')->get();
+        $backgrounds = BackgroundHome::orderBy('id', 'asc')->get();
         $banners = BannerHome::orderBy('id', 'desc')->get();
         $homeContent = HomeContent::find(1); // chỉ có 1 record
 

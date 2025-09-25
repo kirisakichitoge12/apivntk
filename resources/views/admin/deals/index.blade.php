@@ -115,11 +115,11 @@
                 <td>{{ number_format($deal->price) }} VND</td>
                 <td>{{ $deal->trip_type }}</td>
                 <td>
-                    <a href="{{ route('deals.edit', $deal->id) }}" class="btn btn-warning btn-sm">Sửa</a>
-                    <form action="{{ route('deals.destroy', $deal->id) }}" method="POST" style="display:inline-block">
+                <a href="{{ route('deals.edit', $deal->id) }}" class="btn btn-warning btn-sm">Sửa</a>
+                    <!-- <form action="{{ route('deals.destroy', $deal->id) }}" method="POST" style="display:inline-block">
                         @csrf @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('Xoá deal này?')">Xoá</button>
-                    </form>
+                    </form> -->
                 </td>
             </tr>
             @endforeach

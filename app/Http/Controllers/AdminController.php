@@ -4,8 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminCustom;
 use App\Models\AdminHistory;
+use App\Models\BackgroundVemaybaynoidia;
+use App\Models\BackgroundVemaybayquocte;
+use App\Models\BannerVemaybaynoidia;
+use App\Models\BannerVemaybayquocte;
 use App\Models\Booking;
 use App\Models\BookingDetail;
+use App\Models\Consult;
+use App\Models\Deal;
+use App\Models\DescriptionNoidia;
+use App\Models\Faq;
+use App\Models\Flight;
+use App\Models\FlightNoidia;
+use App\Models\InternationalDeal;
+use App\Models\InternationalFlight;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -173,5 +185,86 @@ class AdminController extends Controller
 
         return view('admin.histories.index', compact('histories'));
     }
+     public function getContact()
+    {
+        // Lấy danh sách mới nhất trước
+        $consults = Consult::orderBy('id', 'desc')->paginate(10); 
 
+        return view('admin.consult.index', compact('consults'));
+    }
+    public function getNoiDiaData()
+    {
+        try {
+            // Lấy danh sách vé (có thể thêm filter nếu cần)
+            $flights = Flight::query()->get();
+
+            // Deal tốt nhất
+            $deals = Deal::query()->orderBy('price', 'asc')->get();
+
+            // Vé nội địa
+            $flightNoidia = FlightNoidia::query()->get();
+ 
+            // FAQ: chỉ lấy các câu hỏi thuộc category_id = 1
+            $faqs = Faq::where('category_id', 1)->get();
+            
+            $backgrounds = BackgroundVemaybaynoidia::orderBy('id', 'desc')->get();
+            $banners     = BannerVemaybaynoidia::orderBy('id', 'desc')->get();
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'flights' => $flights,
+                    'deals'   => $deals,
+                    'flight_noidia' => $flightNoidia,
+                    'faqs'    => $faqs,
+                    'backgrounds' => $backgrounds,
+                    'banners'    => $banners,
+                ],
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Không thể lấy dữ liệu',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function getQuocTeData()
+    {
+        try {
+            // Lấy danh sách chuyến bay quốc tế
+            $flights = InternationalFlight::query()->get();
+
+            // Deal tốt nhất (sắp xếp theo giá tăng dần)
+            $deals = InternationalDeal::query()->orderBy('price', 'asc')->get();
+
+            // FAQ: ví dụ category_id = 2 cho quốc tế (nếu bạn muốn tách riêng)
+            $faqs = Faq::where('category_id', 2)->get();
+            $flightQuocTe = FlightNoidia::where('id', 2)->get();
+            // Backgrounds & Banners cho vé máy bay quốc tế
+            $backgrounds = BackgroundVemaybayquocte::orderBy('id', 'desc')->get();
+            $banners     = BannerVemaybayquocte::orderBy('id', 'desc')->get();
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'flights' => $flights,
+                    'deals'   => $deals,
+                    'faqs'    => $faqs,
+                    'flight_quocte' => $flightQuocTe,
+                    'backgrounds' => $backgrounds,
+                    'banners'    => $banners,
+                    
+                ],
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Không thể lấy dữ liệu quốc tế',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    
 }

@@ -36,7 +36,7 @@
                 <label for="from" class="form-label">Điểm đi</label>
                 <select name="from" class="form-select" required>
                     <option value="">Chọn điểm đi</option>
-                    <option value="TP. Hồ Chí Minh (SGN)" {{ old('from', $deal->from) == 'TP. Hồ Chí Minh (SGN)' ? 'selected' : '' }}>TP. Hồ Chí Minh (SGN)</option>
+                    <option value="TP. Hồ Chí Minh (SGN)" {{ old('from', $deal->from) == 'TP. Hồ Chí Minh (SGN)' || old('to', $deal->from) == 'TP HCM (SGN)' ? 'selected' : '' }}>TP. Hồ Chí Minh (SGN)</option>
                     <option value="Hà Nội (HAN)" {{ old('from', $deal->from) == 'Hà Nội (HAN)' ? 'selected' : '' }}>Hà Nội (HAN)</option>
                 </select>
             </div>
